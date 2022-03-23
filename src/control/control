@@ -1,0 +1,9 @@
+Package:			docker
+Priority:			optional
+Version:			20.10.13
+Section:			base
+Architecture:	armhf
+Maintainer:		"Dan Spiteri <d.spiteri@herobalancer.nl>"
+Depends:	
+Source: 	
+Description:	"Docker daemon 20.10.13 with docker-compose"

@@ -1,0 +1,24 @@
+#!/bin/bash
+# IPKG pre inst script:
+# WAGO Kontakttechnik GmbH & Co. KG / Helmut.Saal@wago.com
+
+# check fw compatibility only if we are running on the target. This is done by
+# checking the global variable DESTDIR which is set by PTXDIST when the rootfs
+# target is created.
+if [ -z "$DESTDIR" ]; then
+
+	# Get fw major number. This package only works in fw major numbers >= 03
+	fw_major_number=$(awk -F "[.=]" '{print $2}' /etc/REVISIONS)
+
+	if [ $fw_major_number -lt 3 ]; then
+		echo "ERROR: package is not supported in this firmware version"
+		exit 1
+	fi
+fi
+
+# In case of update, clear postremove script
+echo "Cleaning postremove script from old installation"
+echo "" > /var/lib/opkg/info/docker.postrm &> /dev/null
+
+
+exit 0

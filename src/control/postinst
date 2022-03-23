@@ -1,0 +1,26 @@
+#!/bin/bash
+# IPKG post inst script:
+# WAGO Kontakttechnik GmbH & Co. KG / Helmut.Saal@wago.com
+
+# License stuff
+cp /etc/license.docker_19.03.13.txt /var/www/wbm/licenses/oss/ &> /dev/null
+rm /etc/license.docker_19.03.13.txt &> /dev/null
+chmod 644 /var/www/wbm/licenses/oss/license.docker_19.03.13.txt &> /dev/null
+
+# Link binarys to /usr/bin because of less space inside the "usr/bin" folder
+ln -s /home/dockerdaemon/containerd /usr/bin/containerd
+ln -s /home/dockerdaemon/containerd-shim /usr/bin/containerd-shim
+ln -s /home/dockerdaemon/ctr /usr/bin/ctr
+ln -s /home/dockerdaemon/docker /usr/bin/docker
+ln -s /home/dockerdaemon/dockerd /usr/bin/dockerd
+ln -s /home/dockerdaemon/docker-compose /usr/bin/docker-compose
+ln -s /home/dockerdaemon/docker-init /usr/bin/docker-init
+ln -s /home/dockerdaemon/docker-proxy /usr/bin/docker-proxy
+ln -s /home/dockerdaemon/runc /usr/bin/runc
+
+# Start on reboot
+ln -s /etc/init.d/dockerd /etc/rc.d/S99_docker 
+
+# Start the Daemon
+/etc/init.d/dockerd start
+
